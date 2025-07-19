@@ -1,43 +1,57 @@
-import project1 from '../assets/profilehubapp.png';
-import project2 from '../assets/soundpeace.png';
-import project3 from '../assets/daycaredbms.png';
+import { useEffect, useState } from 'react'
+import './pages.css';
 
 function Projects() {
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const res = await fetch('http://localhost:3000/api/projects/')
+        console.log(res);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+        // verify we really got JSON
+        const type = res.headers.get('content-type') || ''
+        if (!type.includes('application/json')) {
+          throw new Error('Response was not valid JSON')
+        }
+
+        const data = await res.json()
+        setProjects(Array.isArray(data) ? data : [])
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProjects()
+  }, [])
+
+  if (loading) return <p>Loading projects…</p>
+  if (error) return <p>Could not load projects: {error}</p>
+  if (projects.length === 0) return <div className="noProj"><p>No Projects</p></div>
+
   return (
-    <div className="projects-container">
-      <h1 className="projects-title">My Projects</h1>
+    <div className="projectsContainer">
+      <h1 className="projectsTitle">My Projects</h1>
 
-      <div className="project-card">
-        <img src={project1} alt="ProfileHubApp" className="project-img" />
-        <div className="project-info">
-          <h2>ProfileHubApp</h2>
-          <p><strong>Role:</strong> Lead Developer</p>
-          <p><strong>Description:</strong> A profile management web application built using React and Firebase. Users can create, edit, and display digital profiles in a clean, responsive UI.</p>
-          <p><strong>Outcome:</strong> Successfully deployed a fully functional MVP with authentication and real-time data sync.</p>
+      {projects.map(p => (
+        <div key={p.title} className="projectCard">
+          <div className="projectInfo">
+            <h2>{p.title}</h2>
+            <p><strong>Author:</strong> {p.firstname} {p.lastname}</p>
+            <p><strong>Email:</strong> {p.email}</p>
+            <p><strong>Completion:</strong> {new Date(p.completion).toLocaleDateString()}</p>
+            <p><strong>Description:</strong> {p.description}</p>
+          </div>
         </div>
-      </div>
-
-      <div className="project-card">
-        <img src={project2} alt="SOUNDPEACE" className="project-img" />
-        <div className="project-info">
-          <h2>Project01: SOUNDPEACE</h2>
-          <p><strong>Role:</strong> Frontend Engineer</p>
-          <p><strong>Description:</strong> A collaborative music-sharing platform where users can upload tracks, share playlists, and explore new sounds together.</p>
-          <p><strong>Outcome:</strong> Designed the full UI/UX, improving user engagement and accessibility across devices.</p>
-        </div>
-      </div>
-
-      <div className="project-card">
-        <img src={project3} alt="Daycare DBMS" className="project-img" />
-        <div className="project-info">
-          <h2>Daycare Centre DBMS</h2>
-          <p><strong>Role:</strong> Database Designer</p>
-          <p><strong>Description:</strong> Built an Oracle-based system to manage children’s records, staff assignments, and activity logs with SQL scripts and ERD modeling.</p>
-          <p><strong>Outcome:</strong> Delivered a normalized, scalable schema used as a model project in Advanced Databases class.</p>
-        </div>
-      </div>
+      ))}
     </div>
-  );
+  )
 }
 
-export default Projects;
+export default Projects

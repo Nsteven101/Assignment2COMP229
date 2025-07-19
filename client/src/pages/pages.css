@@ -1,0 +1,106 @@
+/* education.css */
+.educationContainer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.educationTitle {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+    color: #1e7ad9;     
+}
+
+.educationCard {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.educationCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.educationInfo h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: #1e293b;
+}
+
+.educationInfo p {
+  margin: 0.25rem 0;
+  line-height: 1.4;
+  color: #334155;
+}
+
+.educationInfo strong {
+  color: #1e7ad9;     
+}
+
+/* projects.css */
+.projectsContainer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.projectsTitle {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.projectCard {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.projectCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.projectInfo h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: #1e293b;
+}
+
+.projectInfo p {
+  margin: 0.25rem 0;
+  line-height: 1.4;
+  color: #334155;
+}
+
+.projectInfo strong {
+  color: #0f172a;
+}
+/* projectsEmpty.css */
+.noProj {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;               /* fills half of the viewport height */
+}
+
+.noProj p {
+  margin: 0;
+  font-size: calc(1.2rem + 1vw);  /* grows with viewport width */
+  font-weight: 600;
+  color: #1e7ad9;                 /* site accent blue */
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
