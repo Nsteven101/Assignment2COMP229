@@ -62,3 +62,7 @@
 .signoutButton:hover {
   background-color: #004182;
 }
+
+.signupButton{
+   color: #0a66c2;
+}

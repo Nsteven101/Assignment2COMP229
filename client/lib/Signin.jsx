@@ -1,39 +1,37 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { signin } from "./api-auth"
+import { useState } from "react";
+import { useNavigate, Link } from "react\u002drouter\u002ddom";
+import { signin } from "./api-auth";      /* assumes apiAuth is your helper file */
 
 function SignIn({ onAuth }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [values, setValues] = useState({ email: "", password: "" })
-  const [sending, setSending] = useState(false)
-  const [error, setError] = useState("")
+  const [values, setValues] = useState({ email: "", password: "" });
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) =>
-    setValues({ ...values, [e.target.name]: e.target.value })
+    setValues({ ...values, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError("")
-    setSending(true)
+    e.preventDefault();
+    setError("");
+    setSending(true);
 
     try {
-      const data = await signin(values)
+      const data = await signin(values);
 
       if (data?.token) {
-        console.log('logged in succesfully')
-        onAuth() 
-        navigate("/admin")
-
+        onAuth();
+        navigate("/admin");
       } else {
-        setError(data?.error ?? "Sign in failed")
+        setError(data?.error ?? "Sign in failed");
       }
     } catch (err) {
-      setError(err.message)
+      setError(err.message);
     } finally {
-      setSending(false)
+      setSending(false);
     }
-  }
+  };
 
   return (
     <div className="contact-container">
@@ -60,8 +58,14 @@ function SignIn({ onAuth }) {
           {sending ? "Signing in…" : "Sign In"}
         </button>
       </form>
+
+      {/* sign-up link */}
+      <p className="contact-secondary">
+        Do not have an account?{" "}
+        <Link className="signupButton" to="/signup">Sign up</Link>
+      </p>
     </div>
-  )
+  );
 }
 
-export default SignIn
+export default SignIn;

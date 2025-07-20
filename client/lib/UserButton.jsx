@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import headimg from '../src/assets/damn.jpg'
 import auth from './auth-helper.js'
-import './admin.css';
+import './lib.css';
 
 function AdminButton () {
   const session = auth.isAuthenticated()
