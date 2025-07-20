@@ -13,7 +13,7 @@ import {
   getEducation,
   deleteEducation,
 } from "./education";
-import auth from "../../lib/auth-helper";  // ✅ import auth
+import auth from "../../lib/auth-helper"; 
 
 const Empty = () => (
   <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>

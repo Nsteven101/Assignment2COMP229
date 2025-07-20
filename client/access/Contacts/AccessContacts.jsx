@@ -9,7 +9,12 @@ import {
   ListItem,
   ListItemText,
   Avatar,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import auth from "../../lib/auth-helper"; // adjust the path to your auth helper if needed
 
 const Empty = () => (
   <Box
@@ -27,6 +32,9 @@ const Empty = () => (
 export default function AccessContact() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const session = auth.isAuthenticated();
+  const isAdmin = session?.user?.role === "admin";
 
   useEffect(() => {
     (async () => {
@@ -56,6 +64,31 @@ export default function AccessContact() {
     })();
   }, []);
 
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this contact?")) return;
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/contacts/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.token}`, // if your API uses JWT token
+        },
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.error || "Delete failed");
+      }
+
+      setRows(prev => prev.filter(row => row.id !== id));
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "Failed to delete contact");
+    }
+  };
+
   const renderList = () => (
     <List>
       {rows.map(row => {
@@ -79,26 +112,35 @@ export default function AccessContact() {
           >
             <Avatar sx={{ mr: 2 }}>{initials}</Avatar>
 
-            <ListItemText
-              primary={
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography sx={{ fontWeight: 600 }}>{row.name}</Typography>
-                  <Typography variant="caption" sx={{ ml: "auto" }}>
-                    {row.date}
-                  </Typography>
-                </Box>
-              }
-              secondary={
-                <>
-                  <Typography variant="body2" color="text.secondary">
-                    {row.email} {row.contactNumber ? `· ${row.contactNumber}` : ""}
-                  </Typography>
-                  <Typography variant="body2" sx={{ mt: 0.5 }}>
-                    {row.message}
-                  </Typography>
-                </>
-              }
-            />
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <ListItemText
+                primary={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography sx={{ fontWeight: 600 }}>{row.name}</Typography>
+                    <Typography variant="caption" sx={{ ml: "auto" }}>
+                      {row.date}
+                    </Typography>
+                  </Box>
+                }
+                secondary={
+                  <>
+                    <Typography variant="body2" color="text.secondary">
+                      {row.email} {row.contactNumber ? `· ${row.contactNumber}` : ""}
+                    </Typography>
+                    <Typography variant="body2" sx={{ mt: 0.5 }}>
+                      {row.message}
+                    </Typography>
+                  </>
+                }
+              />
+              {isAdmin && (
+                <Tooltip title="Delete">
+                  <IconButton onClick={() => handleDelete(row.id)} sx={{ ml: 2 }}>
+                    <DeleteIcon color="error" />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </Box>
           </ListItem>
         );
       })}

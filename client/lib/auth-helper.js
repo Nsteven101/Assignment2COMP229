@@ -1,43 +1,27 @@
 import { signout } from "./api-auth.js";
-
 const auth = {
   isAuthenticated() {
-    if (typeof window === "undefined") return false;
-    const jwt = sessionStorage.getItem("jwt");
-    if (!jwt) return false;
-
-    try {
-      return JSON.parse(jwt); // { token, user: { ... } }
-    } catch (err) {
-      console.error("Failed to parse JWT from sessionStorage", err);
-      return false;
-    }
+    if (typeof window == "undefined") return false;
+    if (sessionStorage.getItem("jwt"))
+      return JSON.parse(sessionStorage.getItem("jwt"));
+    else return false;
   },
-
   authenticate(jwt, cb) {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined")
       sessionStorage.setItem("jwt", JSON.stringify(jwt));
-    }
-    cb(); // optional callback
+    cb();
   },
-
   isAdmin() {
-    const session = this.isAuthenticated();
-    return session && session.user && session.user.role === "admin";
+    const session = this.isAuthenticated()
+    return session && session.user && session.user.role === "admin"
   },
 
   clearJWT(cb) {
-    if (typeof window !== "undefined") {
-      sessionStorage.removeItem("jwt");
-    }
-
-    cb?.(); // safely call callback if defined
-
-    signout().then(() => {
-      // Expire cookie manually
+    if (typeof window !== "undefined") sessionStorage.removeItem("jwt");
+    cb(); //optional
+    signout().then((data) => {
       document.cookie = "t=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     });
   },
 };
-
 export default auth;

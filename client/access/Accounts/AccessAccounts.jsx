@@ -63,13 +63,12 @@ export default function AccessAccounts() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this account?")) return;
+    if (!window.confirm("Delete this user account?")) return;
     const res = await remove({ userId: id }, { t: session.token });
     if (res?.error) return alert(res.error);
-
     setRows((prev) => prev.filter((r) => r._id !== id));
 
-    // If user deleted themselves, log them out
+    // log out if the user deleted their own account
     if (id === currentUserId) {
       auth.clearJWT(() => navigate("/signin"));
     }
@@ -84,12 +83,11 @@ export default function AccessAccounts() {
   const actionsColumn = {
     field: "actions",
     headerName: "Actions",
-    width: 200,
+    width: 180,
     sortable: false,
     renderCell: ({ row }) => {
-      const isSelf = row._id === currentUserId;
-      const canEdit = isAdmin || isSelf;
-      const canDelete = isAdmin || isSelf;
+      const canEdit = isAdmin || row._id === currentUserId;
+      const canDelete = isAdmin || row._id === currentUserId;   // changed line
 
       return (
         <Box sx={{ display: "flex", gap: 1 }}>
