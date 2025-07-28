@@ -9,7 +9,7 @@ function Projects() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const res = await fetch('http://localhost:3000/api/projects/')
+        const res = await fetch('/api/projects/')
         console.log(res);
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
 

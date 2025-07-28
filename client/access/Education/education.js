@@ -1,5 +1,5 @@
 // apiEducations.js
-const base = "http://localhost:3000/api/qualifications"
+const base = "/api/qualifications"
 
 // builds common headers and adds auth when available
 const getHeaders = () => {

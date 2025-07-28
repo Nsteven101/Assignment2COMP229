@@ -9,7 +9,7 @@ function Education() {
   useEffect(() => {
     async function fetchEducation() {
       try {
-        const res = await fetch('http://localhost:3000/api/qualifications')
+        const res = await fetch('/api/qualifications')
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}`)
         }

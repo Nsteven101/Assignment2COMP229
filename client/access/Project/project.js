@@ -1,5 +1,5 @@
 // apiProjects.js
-const base = "http://localhost:3000/api/projects"
+const base = "/api/projects"
 
 // builds common headers and adds auth when available
 const getHeaders = () => {

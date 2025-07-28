@@ -1,5 +1,5 @@
 
-const API_BASE = "http://localhost:3000/api/users";
+const API_BASE = "/api/users";
 
 const handleResponse = async (response) => {
   try {
