@@ -1,0 +1,137 @@
+{
+    "title": "NavBarTest 7/29/2025 at 1:21:22 AM",
+    "steps": [
+        {
+            "type": "setViewport",
+            "width": 896,
+            "height": 695,
+            "deviceScaleFactor": 1,
+            "isMobile": false,
+            "hasTouch": false,
+            "isLandscape": false
+        },
+        {
+            "type": "navigate",
+            "url": "http://localhost:3000/",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "http://localhost:3000/",
+                    "title": "COMP228 Portfolio"
+                }
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/About"
+                ],
+                [
+                    "nav > a:nth-of-type(2)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/nav/a[2]"
+                ],
+                [
+                    "pierce/nav > a:nth-of-type(2)"
+                ]
+            ],
+            "offsetY": 27,
+            "offsetX": 15.824996948242188
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Projects"
+                ],
+                [
+                    "a:nth-of-type(3)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/nav/a[3]"
+                ],
+                [
+                    "pierce/a:nth-of-type(3)"
+                ],
+                [
+                    "text/Projects"
+                ]
+            ],
+            "offsetY": 15,
+            "offsetX": 17.887481689453125
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Services"
+                ],
+                [
+                    "a:nth-of-type(5)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/nav/a[5]"
+                ],
+                [
+                    "pierce/a:nth-of-type(5)"
+                ],
+                [
+                    "text/Services"
+                ]
+            ],
+            "offsetY": 19,
+            "offsetX": 19.1624755859375
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Education"
+                ],
+                [
+                    "a:nth-of-type(4)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/nav/a[4]"
+                ],
+                [
+                    "pierce/a:nth-of-type(4)"
+                ],
+                [
+                    "text/Education"
+                ]
+            ],
+            "offsetY": 6,
+            "offsetX": 49.387481689453125
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Contact"
+                ],
+                [
+                    "a:nth-of-type(6)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/nav/a[6]"
+                ],
+                [
+                    "pierce/a:nth-of-type(6)"
+                ],
+                [
+                    "text/Contact"
+                ]
+            ],
+            "offsetY": 3,
+            "offsetX": 25.67498779296875
+        }
+    ]
+}
