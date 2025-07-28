@@ -16,7 +16,11 @@ const signin = async (req, res) => {
       return res.status(401).json({ error: "Email and password don't match." });
     }
 
-    const token = jwt.sign({ _id: user._id }, config.jwtSecret);
+    // ✅ Include role in JWT payload
+    const token = jwt.sign(
+      { _id: user._id, role: user.role },
+      config.jwtSecret
+    );
     res.cookie('t', token, { expire: new Date() + 9999 });
 
     return res.json({
@@ -24,7 +28,8 @@ const signin = async (req, res) => {
       user: {
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     });
   } catch (err) {
@@ -45,12 +50,13 @@ const requireSignin = expressjwt({
   userProperty: 'auth'
 });
 
-// Middleware to check user authorization
 const hasAuthorization = (req, res, next) => {
-  const authorized =
+  const sameUser =
     req.profile && req.auth && req.profile._id.toString() === req.auth._id;
 
-  if (!authorized) {
+  const isAdmin = req.auth && req.auth.role === 'admin';
+
+  if (!sameUser && !isAdmin) {
     return res.status(403).json({ error: 'User is not authorized' });
   }
 

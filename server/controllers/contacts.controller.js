@@ -5,8 +5,8 @@ import errorController from './error.controller.js';
 // Create a new contact
 const create = async (req, res) => {
   try {
-    const { firstname, lastname, email } = req.body;
-    const newContact = new Contact({ firstname, lastname, email });
+    const { firstname, lastname, contactNumber, email, message } = req.body;
+    const newContact = new Contact({ firstname, lastname, contactNumber, email, message });
     await newContact.save();
     res.status(201).json({ message: 'Contact created', contact: newContact });
   } catch (error) {

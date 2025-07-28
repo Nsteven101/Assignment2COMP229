@@ -41,5 +41,10 @@ console.log(err)
 } 
 })
 
+import path from "path";
+
+const CURRENT_WORKING_DIR = process.cwd();
+app.use(express.static(path.join(CURRENT_WORKING_DIR, "dist/app")));
+
 
 export default app;
